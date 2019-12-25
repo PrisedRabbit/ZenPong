@@ -19,13 +19,16 @@ namespace PongGame
             Container.BindInstance(sceneReferences);
             var atoms = GetComponent<AtomsReferences>();
             Container.BindInstance(atoms);
+
             //bind input
             inputHandler = new InputHandler();
             Container.BindInterfacesAndSelfTo<InputHandler>().FromInstance(inputHandler).AsSingle();
+
             //bind pools
             Container.BindMemoryPool<Ball, Ball.Pool>()
                 .WithInitialSize(1)
                 .FromComponentInNewPrefab(sceneReferences.BallPrefab);
+
             //bind logic
             if (gameSettings.gameMode == GameMode.Multiplayer)
             {
@@ -35,11 +38,6 @@ namespace PongGame
             {
                 Container.BindInterfacesAndSelfTo<LocalGameManager>().AsSingle();
             }
-        }
-
-        private void OnDestroy()
-        {
-            inputHandler.Dispose();
         }
     }
 }

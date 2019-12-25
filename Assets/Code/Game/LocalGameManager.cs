@@ -22,10 +22,12 @@ namespace PongGame
             Application.targetFrameRate = gameSettings.targetFrameRate;
 
             atomsReferences.CollisionBallEvent.OnEvent += OnBallCollision;
-            atomsReferences.StartGameEvent.OnEvent += OnCountDownEnd;
+            atomsReferences.CountDownEndEvent.OnEvent += OnCountDownEnd;
 
             SetupPaddles();
             SpawnBall();
+
+            atomsReferences.RestartLevelEvent.Raise();
         }
 
         private void SpawnBall()
@@ -35,7 +37,6 @@ namespace PongGame
             randomDir.y = Mathf.Clamp(randomDir.x, 0.2f, 0.5f) * (Random.value > 0.5f ? 1 : -1);
             ball = ballPool.Spawn(randomDir, 300f);
             ball.transform.position = Vector2.zero;
-            ball.Push();
         }
 
         private void SetupPaddles()
@@ -62,26 +63,22 @@ namespace PongGame
             }
             else if (collidedGO.tag.Contains("Goal"))
             {
-                GameOver();
+                Restart();
             }
-        }
-
-        void GameOver()
-        {
-            Restart();
         }
 
         void Restart()
         {
-            atomsReferences.ScoreVariable.Value += 0;
+            atomsReferences.ScoreVariable.Value = 0;
             ballPool.Despawn(ball);
             SpawnBall();
+            atomsReferences.RestartLevelEvent.Raise();
         }
 
         public void Dispose()
         {
             atomsReferences.CollisionBallEvent.OnEvent -= OnBallCollision;
-            atomsReferences.StartGameEvent.OnEvent -= OnCountDownEnd;
+            atomsReferences.CountDownEndEvent.OnEvent -= OnCountDownEnd;
         }
     }
 }
