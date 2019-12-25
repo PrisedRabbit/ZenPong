@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   targetFrameRate: 60
-  ballSpeedRange: {x: 1, y: 10}
+  ballSpeedRange: {x: 200, y: 400}
   gameMode: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityAtoms;
 using UnityEngine;
 using Zenject;
+using DG.Tweening;
 
 namespace PongGame
 {
@@ -35,7 +36,8 @@ namespace PongGame
             var randomDir = Random.insideUnitCircle;
             randomDir.x = Mathf.Clamp(randomDir.x, 0.5f, 0.8f) * (Random.value > 0.5f ? 1 : -1);
             randomDir.y = Mathf.Clamp(randomDir.x, 0.2f, 0.5f) * (Random.value > 0.5f ? 1 : -1);
-            ball = ballPool.Spawn(randomDir, 300f);
+            var speed = Random.Range(gameSettings.ballSpeedRange.x, gameSettings.ballSpeedRange.y);
+            ball = ballPool.Spawn(randomDir, speed);
             ball.transform.position = Vector2.zero;
         }
 
@@ -63,12 +65,14 @@ namespace PongGame
             }
             else if (collidedGO.tag.Contains("Goal"))
             {
-                Restart();
+                // just adds delay between restart
+                DOTween.To(() => Time.timeScale, t => Time.timeScale = t, 1f, 1.0f).OnComplete(Restart);
             }
         }
 
         void Restart()
         {
+            Time.timeScale = 1f;
             atomsReferences.ScoreVariable.Value = 0;
             ballPool.Despawn(ball);
             SpawnBall();

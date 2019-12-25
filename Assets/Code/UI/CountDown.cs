@@ -32,7 +32,6 @@ public sealed class CountDown : MonoBehaviour
     private IEnumerator StartCount()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("count");
         index = 0;
         Count();
     }

@@ -670,7 +670,6 @@ GameObject:
   - component: {fileID: 660488598}
   - component: {fileID: 660488601}
   - component: {fileID: 660488602}
-  - component: {fileID: 660488603}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -770,21 +769,6 @@ MonoBehaviour:
   restartLevelEvent: {fileID: 11400000, guid: 2c5dd52ee9d644478a31807daf9c429f, type: 2}
   collisionBallEvent: {fileID: 11400000, guid: 6331dd44f37ae436c9f926f9846c6a35, type: 2}
   scoreVariable: {fileID: 11400000, guid: e38e8d8f942854bcfb81cd9d642110e1, type: 2}
---- !u!111 &660488603
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660488597}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &710775239
 GameObject:
   m_ObjectHideFlags: 0

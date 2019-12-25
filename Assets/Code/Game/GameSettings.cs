@@ -16,7 +16,8 @@ namespace PongGame
         [Tooltip("Random speed range (physics force")]
         public Vector2Int ballSpeedRange;
 
-        [HideInInspector]
-        public GameMode gameMode;
+        public Vector2 ballScaleRange;
+        
+        [HideInInspector] public GameMode gameMode;
     }
 }
