@@ -28,6 +28,9 @@ namespace PongGame
             Container.BindMemoryPool<Ball, Ball.Pool>()
                 .WithInitialSize(1)
                 .FromComponentInNewPrefab(sceneReferences.BallPrefab);
+                
+            // score manager
+            Container.BindInterfacesAndSelfTo<HighScoreManager>().AsSingle();
 
             //bind logic
             if (gameSettings.gameMode == GameMode.Multiplayer)

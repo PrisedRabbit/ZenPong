@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: IntPlayerScore
   m_EditorClassIdentifier: 
   _developerDescription: 
-  _value: 54
+  _value: 0
   _initialValue: 0
-  _oldValue: 54
+  _oldValue: 0
   Changed: {fileID: 11400000, guid: 83f83221bb7da4339adfc10c530c7910, type: 2}
   ChangedWithHistory: {fileID: 0}

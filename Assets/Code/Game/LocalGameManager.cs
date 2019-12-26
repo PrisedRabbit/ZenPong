@@ -9,36 +9,48 @@ namespace PongGame
 {
     public sealed class LocalGameManager : IInitializable, System.IDisposable
     {
-        [Inject] private GameSettings gameSettings;
-        [Inject] private InputHandler inputHandler;
-        [Inject] private SceneReferences sceneReferences;
-        [Inject] private AtomsReferences atomsReferences;
+        private readonly GameSettings gameSettings;
+        private readonly InputHandler inputHandler;
+        private readonly SceneReferences sceneReferences;
+        private readonly AtomsReferences atoms;
+        private readonly Ball.Pool ballPool;
 
-        [Inject] Ball.Pool ballPool;
-
-        Ball ball;
+        public LocalGameManager(GameSettings gameSettings, InputHandler inputHandler, SceneReferences sceneReferences, AtomsReferences atomsReferences, Ball.Pool ballPool)
+        {
+            this.gameSettings = gameSettings;
+            this.inputHandler = inputHandler;
+            this.sceneReferences = sceneReferences;
+            this.atoms = atomsReferences;
+            this.ballPool = ballPool;
+        }
 
         public void Initialize()
         {
             Application.targetFrameRate = gameSettings.targetFrameRate;
 
-            atomsReferences.CollisionBallEvent.OnEvent += OnBallCollision;
-            atomsReferences.CountDownEndEvent.OnEvent += OnCountDownEnd;
+            atoms.CollisionBallEvent.OnEvent += OnBallCollision;
+            atoms.CountDownEndEvent.OnEvent += OnCountDownEnd;
 
             SetupPaddles();
             SpawnBall();
 
-            atomsReferences.RestartLevelEvent.Raise();
+            // lets rolling the ball!
+            atoms.RestartLevelEvent.Raise();
         }
+
+        #region create entities
+        //TODO: move code to Factories?
+
+        Ball ball;
 
         private void SpawnBall()
         {
             var randomDir = Random.insideUnitCircle;
             randomDir.x = Mathf.Clamp(randomDir.x, 0.5f, 0.8f) * (Random.value > 0.5f ? 1 : -1);
             randomDir.y = Mathf.Clamp(randomDir.x, 0.2f, 0.5f) * (Random.value > 0.5f ? 1 : -1);
+            var scale = Random.Range(gameSettings.ballScaleRange.x, gameSettings.ballScaleRange.y);
             var speed = Random.Range(gameSettings.ballSpeedRange.x, gameSettings.ballSpeedRange.y);
-            ball = ballPool.Spawn(randomDir, speed);
-            ball.transform.position = Vector2.zero;
+            ball = ballPool.Spawn(randomDir, speed, scale);
         }
 
         private void SetupPaddles()
@@ -50,9 +62,13 @@ namespace PongGame
             inputHandler.AddMovable(paddle1.GetComponent<IHorizontalMoveable>());
             inputHandler.AddMovable(paddle2.GetComponent<IHorizontalMoveable>());
         }
+        #endregion
+
+        #region game logic
 
         void OnCountDownEnd(UnityAtoms.Void nothing)
         {
+            atoms.ScoreVariable.Value = 0;
             ball.Push();
         }
 
@@ -61,28 +77,31 @@ namespace PongGame
             var collidedGO = collider.gameObject;
             if (collidedGO.CompareTag("Player"))
             {
-                atomsReferences.ScoreVariable.Value += 1;
+                atoms.ScoreVariable.Value += 1;
             }
             else if (collidedGO.tag.Contains("Goal"))
             {
                 // just adds delay between restart
-                DOTween.To(() => Time.timeScale, t => Time.timeScale = t, 1f, 1.0f).OnComplete(Restart);
+                var delay = 0;
+                DOTween.To(() => delay, t => delay = t, 0, 1).OnComplete(Restart);
             }
+            //TODO: fix ball's vertical velocity, to prevent infitiy bounce between obstacles
         }
 
         void Restart()
         {
             Time.timeScale = 1f;
-            atomsReferences.ScoreVariable.Value = 0;
             ballPool.Despawn(ball);
             SpawnBall();
-            atomsReferences.RestartLevelEvent.Raise();
+            atoms.RestartLevelEvent.Raise();
         }
+        
+        #endregion
 
         public void Dispose()
         {
-            atomsReferences.CollisionBallEvent.OnEvent -= OnBallCollision;
-            atomsReferences.CountDownEndEvent.OnEvent -= OnCountDownEnd;
+            atoms.CollisionBallEvent.OnEvent -= OnBallCollision;
+            atoms.CountDownEndEvent.OnEvent -= OnCountDownEnd;
         }
     }
 }

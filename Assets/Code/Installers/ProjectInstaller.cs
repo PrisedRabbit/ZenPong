@@ -10,5 +10,6 @@ public sealed class ProjectInstaller : ScriptableObjectInstaller<ProjectInstalle
     public override void InstallBindings()
     {
             Container.BindInstance(gameSettings).AsSingle();
+            Container.Bind<IDatabase>().To<Database>().AsSingle();
     }
 }
