@@ -16,4 +16,18 @@ public sealed class AtomsReferences : MonoBehaviour
     public Collider2DEvent CollisionBallEvent { get => collisionBallEvent; }
     public IntVariable ScoreVariable { get => scoreVariable; }
     public IntVariable HighScoreVariable { get => highScoreVariable; }
+
+    // It's anoing to create events for variables.
+    // Dont forget to change execution order to prior
+    private void Awake()
+    {
+        scoreVariable.Changed = scoreVariable.Changed ?? ScriptableObject.CreateInstance<IntEvent>();
+        HighScoreVariable.Changed = HighScoreVariable.Changed ?? ScriptableObject.CreateInstance<IntEvent>();
+    }
+
+    private void OnDestroy() 
+    {
+        GameObject.Destroy(scoreVariable.Changed);
+        GameObject.Destroy(HighScoreVariable.Changed);
+    }
 }

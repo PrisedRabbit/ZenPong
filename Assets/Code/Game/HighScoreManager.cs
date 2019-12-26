@@ -14,6 +14,8 @@ namespace PongGame
         private readonly AtomsReferences atoms;
         private readonly IDatabase database;
 
+        int highScore;
+
         public HighScoreManager(AtomsReferences atomsReferences, IDatabase database)
         {
             this.atoms = atomsReferences;
@@ -22,25 +24,31 @@ namespace PongGame
 
         public void Initialize()
         {
-            atoms.HighScoreVariable.Value = database.GetHighScore(PLAYER_ID);
-            atoms.RestartLevelEvent.OnEvent += OnEndRound;
+            highScore = database.GetHighScore(PLAYER_ID);
+            atoms.HighScoreVariable.Value = highScore;
+            atoms.RestartLevelEvent.OnEvent += OnGameRestart;
+            atoms.ScoreVariable.Changed.OnEvent += OnScoreChanged;
         }
 
-        void OnEndRound(UnityAtoms.Void _)
+        void OnScoreChanged(int score)
         {
-            var hc = database.GetHighScore(PLAYER_ID);
-            var score = atoms.ScoreVariable.OldValue;
-            if (score > hc)
+            if (score > highScore)
             {
-                atoms.HighScoreVariable.Value = score;
+                highScore = score;
                 database.SaveHighScore(PLAYER_ID, score);
             }
             //TODO: manage scores for multiplayer?
         }
+        
+        void OnGameRestart(UnityAtoms.Void _)
+        {
+            atoms.HighScoreVariable.Value = highScore;
+        }
 
         public void Dispose()
         {
-            atoms.RestartLevelEvent.OnEvent -= OnEndRound;
+            atoms.RestartLevelEvent.OnEvent -= OnGameRestart;
+            atoms.ScoreVariable.Changed.OnEvent -= OnScoreChanged;
         }
     }
 }

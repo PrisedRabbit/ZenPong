@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityAtoms;
@@ -7,17 +6,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [EditorIcon("atom-icon-delicate")]
-public sealed class IntToTextSetter : MonoBehaviour, System.IObserver<int>
+public sealed class IntToTextSetter : MonoBehaviour
 {
-    [SerializeField][Tooltip("Not required")] private TextMeshProUGUI textMeshPro;
-    [SerializeField][Tooltip("Not required")] private Text uGuiText;
+    [SerializeField][Tooltip("Optional")] private TextMeshProUGUI textMeshPro;
+    [SerializeField][Tooltip("Optional")] private Text uGuiText;
     [SerializeField] private IntVariable intVariable;
-
-    private IDisposable subscribe;
 
     private void Awake()
     {
-        subscribe = intVariable.ObserveChange().Subscribe(this);
+        intVariable.Changed.OnEvent += OnChangeValue;
     }
 
     private void OnChangeValue(int value)
@@ -30,17 +27,6 @@ public sealed class IntToTextSetter : MonoBehaviour, System.IObserver<int>
 
     private void OnDestroy()
     {
-        subscribe.Dispose();
+        intVariable.Changed.OnEvent -= OnChangeValue;
     }
-
-    public void OnNext(int value)
-    {
-        OnChangeValue(intVariable.Value);
-    }
-
-    public void OnCompleted()
-    { }
-
-    public void OnError(Exception error)
-    { }
 }

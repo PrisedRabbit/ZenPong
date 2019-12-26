@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64af2ed99cb146358b8752c3e393fcc, type: 3}
   m_Name: IntPlayerScore
   m_EditorClassIdentifier: 
-  _developerDescription: 
+  _developerDescription: Player Score for Single Gmae Mode
   _value: 0
   _initialValue: 0
   _oldValue: 0
-  Changed: {fileID: 11400000, guid: 83f83221bb7da4339adfc10c530c7910, type: 2}
+  Changed: {fileID: 11400000, guid: 5267816b0f5a14006896234bd7e525a2, type: 2}
   ChangedWithHistory: {fileID: 0}

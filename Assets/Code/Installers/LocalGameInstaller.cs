@@ -16,9 +16,9 @@ namespace PongGame
         {
             //bind asset references
             var sceneReferences = GetComponent<SceneReferences>();
-            Container.BindInstance(sceneReferences);
+            Container.BindInstance(sceneReferences).AsSingle();
             var atoms = GetComponent<AtomsReferences>();
-            Container.BindInstance(atoms);
+            Container.BindInstance(atoms).AsSingle();
 
             //bind input
             inputHandler = new InputHandler();
@@ -28,7 +28,7 @@ namespace PongGame
             Container.BindMemoryPool<Ball, Ball.Pool>()
                 .WithInitialSize(1)
                 .FromComponentInNewPrefab(sceneReferences.BallPrefab);
-                
+
             // score manager
             Container.BindInterfacesAndSelfTo<HighScoreManager>().AsSingle();
 
