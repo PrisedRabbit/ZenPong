@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c634fa7b8a2a440a09547cfb8715387c, type: 3}
-  m_Name: EvenChangeScoreInt
+  m_Name: EventPlaceholderInt
   m_EditorClassIdentifier: 
   _developerDescription: 

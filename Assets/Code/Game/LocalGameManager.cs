@@ -68,7 +68,6 @@ namespace PongGame
 
         void OnCountDownEnd(UnityAtoms.Void nothing)
         {
-            atoms.ScoreVariable.Value = 0;
             ball.Push();
         }
 
@@ -92,6 +91,7 @@ namespace PongGame
         {
             Time.timeScale = 1f;
             ballPool.Despawn(ball);
+            atoms.ScoreVariable.Value = 0;
             SpawnBall();
             atoms.RestartLevelEvent.Raise();
         }

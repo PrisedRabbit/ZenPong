@@ -29,9 +29,10 @@ namespace PongGame
         void OnEndRound(UnityAtoms.Void _)
         {
             var hc = database.GetHighScore(PLAYER_ID);
-            var score = atoms.ScoreVariable.Value;
+            var score = atoms.ScoreVariable.OldValue;
             if (score > hc)
             {
+                atoms.HighScoreVariable.Value = score;
                 database.SaveHighScore(PLAYER_ID, score);
             }
             //TODO: manage scores for multiplayer?
