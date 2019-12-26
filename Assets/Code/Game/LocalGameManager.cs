@@ -39,7 +39,7 @@ namespace PongGame
         }
 
         #region create entities
-        //TODO: move code to Factories?
+        //TODO: use Factories?
 
         Ball ball;
 

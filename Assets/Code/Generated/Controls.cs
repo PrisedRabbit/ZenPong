@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Settings/Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/GameSettings/Controls.inputactions'
 
 using System;
 using System.Collections;
@@ -96,10 +96,10 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bd2efd01-4f12-438b-8ebf-0d51eede6a22"",
-                    ""path"": ""<Touchscreen>/touch1/delta"",
+                    ""id"": ""edcb106e-3108-4e69-a9ff-f6c0f7d37a95"",
+                    ""path"": ""<Touchscreen>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Scale(factor=0.25)"",
                     ""groups"": ""Keyboard and Touch"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
@@ -115,7 +115,7 @@ public class @Controls : IInputActionCollection, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": false,
+                    ""isOptional"": true,
                     ""isOR"": false
                 },
                 {
