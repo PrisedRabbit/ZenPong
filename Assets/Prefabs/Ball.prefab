@@ -135,8 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1626843230420199076}
-  spriteRenderer: {fileID: 1626843230420199079}
-  circleCollider: {fileID: 1626843230420199077}
+  srenderere: {fileID: 1626843230420199079}
   direction: {x: 0, y: 0}
   force: 0
 --- !u!114 &493645088

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace PongGame
 {
@@ -22,12 +23,21 @@ namespace PongGame
             ZPlayerPrefs.Save();
         }
 
+        bool colorWasCached;
+        Color cachedColor;
+
         public Color GetBallColor()
         {
+            if (colorWasCached)
+            {
+                return cachedColor;
+            }
             string col = ZPlayerPrefs.GetString("BallColor");
             if (col == "")
             {
-                return Color.white;
+                cachedColor = Color.white;
+                colorWasCached = true;
+                return cachedColor;
             }
             string[] strings = col.Split(',');
             Color output = new Color();
@@ -35,6 +45,8 @@ namespace PongGame
             {
                 output[i] = System.Single.Parse(strings[i]);
             }
+            cachedColor = output;
+            colorWasCached = true;
             return output;
         }
 
@@ -44,6 +56,8 @@ namespace PongGame
             col = col.Replace("RGBA(", "");
             col = col.Replace(")", "");
             ZPlayerPrefs.SetString("BallColor", col);
+            colorWasCached = true;
+            cachedColor = color;
         }
     }
 }

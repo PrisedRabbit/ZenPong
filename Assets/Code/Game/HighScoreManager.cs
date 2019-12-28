@@ -26,6 +26,7 @@ namespace PongGame
         {
             highScore = database.GetHighScore(PLAYER_ID);
             atoms.HighScoreVariable.Value = highScore;
+            atoms.HighScoreVariable.Changed.Raise(highScore); // bug in atoms? have to manualy rise value if event usese in two scenes
             atoms.RestartLevelEvent.OnEvent += OnGameRestart;
             atoms.ScoreVariable.Changed.OnEvent += OnScoreChanged;
         }
@@ -43,6 +44,7 @@ namespace PongGame
         void OnGameRestart(UnityAtoms.Void _)
         {
             atoms.HighScoreVariable.Value = highScore;
+            atoms.HighScoreVariable.Changed.Raise(highScore);
         }
 
         public void Dispose()

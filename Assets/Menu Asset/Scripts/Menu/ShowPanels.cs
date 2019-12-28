@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 public class ShowPanels : MonoBehaviour {
 
 	public GameObject optionsPanel;							//Store a reference to the Game Object OptionsPanel 
-	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
 	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
 	public GameObject pausePanel;                           //Store a reference to the Game Object PausePanel 
 
@@ -35,7 +34,6 @@ public class ShowPanels : MonoBehaviour {
     public void ShowOptionsPanel()
 	{
 		optionsPanel.SetActive(true);
-		optionsTint.SetActive(true);
         menuPanel.SetActive(false);
         SetSelection(optionsPanel);
 
@@ -46,7 +44,6 @@ public class ShowPanels : MonoBehaviour {
 	{
         menuPanel.SetActive(true);
         optionsPanel.SetActive(false);
-		optionsTint.SetActive(false);
 	}
 
 	//Call this function to activate and display the main menu panel during the main menu
@@ -67,7 +64,6 @@ public class ShowPanels : MonoBehaviour {
 	public void ShowPausePanel()
 	{
 		pausePanel.SetActive (true);
-		optionsTint.SetActive(true);
         SetSelection(pausePanel);
     }
 
@@ -75,7 +71,6 @@ public class ShowPanels : MonoBehaviour {
 	public void HidePausePanel()
 	{
 		pausePanel.SetActive (false);
-		optionsTint.SetActive(false);
 
 	}
 }
