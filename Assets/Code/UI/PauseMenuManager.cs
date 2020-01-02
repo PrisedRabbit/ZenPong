@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public sealed class PauseMenuManager : MonoBehaviour
 {
@@ -30,6 +28,6 @@ public sealed class PauseMenuManager : MonoBehaviour
 
     public void UnPause()
     {
-        pauseGroup.DOFade(0.0f, 0.25f).SetUpdate(true).OnComplete(() => { gameObject.SetActive(false); Time.timeScale = 1.0f; } );
+        pauseGroup.DOFade(0.0f, 0.25f).SetUpdate(true).OnComplete(() => { pauseGroup.gameObject.SetActive(false); Time.timeScale = 1.0f; });
     }
 }
