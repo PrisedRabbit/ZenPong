@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64af2ed99cb146358b8752c3e393fcc, type: 3}
+  m_Name: IntPlayer2Score
+  m_EditorClassIdentifier: 
+  _developerDescription: Player Score for Single Gmae Mode
+  _value: 0
+  _initialValue: 0
+  _oldValue: 0
+  Changed: {fileID: 11400000, guid: d62f002d27e204cbf95a7c24c44e9be7, type: 2}
+  ChangedWithHistory: {fileID: 0}

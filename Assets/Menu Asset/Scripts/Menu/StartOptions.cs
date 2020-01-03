@@ -3,10 +3,10 @@ using System.Collections;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using Zenject;
+using PongGame;
 
 public class StartOptions : MonoBehaviour {
-
 
     public MenuSettings menuSettingsData;
 	public int sceneToStart = 1;										//Index number in build settings of scene to load if changeScenes is true
@@ -17,12 +17,12 @@ public class StartOptions : MonoBehaviour {
 	[HideInInspector] public bool inMainMenu = true;					//If true, pause button disabled in main menu (Cancel in input manager, default escape key)
 	[HideInInspector] public AnimationClip fadeAlphaAnimationClip;		//Animation clip fading out UI elements alpha
 
-
 	private PlayMusic playMusic;										//Reference to PlayMusic script
 	private float fastFadeIn = .01f;									//Very short fade time (10 milliseconds) to start playing music immediately without a click/glitch
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
     private CanvasGroup menuCanvasGroup;
 
+	[Inject] private GameSettings gameSettings;
 
     void Awake()
 	{
@@ -36,6 +36,11 @@ public class StartOptions : MonoBehaviour {
         menuCanvasGroup = GetComponent<CanvasGroup>();
 	}
 
+	public void StartSingleGame()
+	{
+		gameSettings.gameMode = GameMode.Single;
+		StartButtonClicked();
+	}
 
 	public void StartButtonClicked()
 	{

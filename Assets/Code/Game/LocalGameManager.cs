@@ -66,12 +66,12 @@ namespace PongGame
 
         #region game logic
 
-        void OnCountDownEnd(UnityAtoms.Void nothing)
+        private void OnCountDownEnd(UnityAtoms.Void _)
         {
             ball.Push();
         }
 
-        void OnBallCollision(Collider2D collider)
+        private void OnBallCollision(Collider2D collider)
         {
             var collidedGO = collider.gameObject;
             if (collidedGO.CompareTag("Player"))
@@ -87,7 +87,7 @@ namespace PongGame
             //TODO: fix ball's vertical velocity, to prevent infitiy bounce between obstacles
         }
 
-        void Restart()
+        private void Restart()
         {
             Time.timeScale = 1f;
             ballPool.Despawn(ball);

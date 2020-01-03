@@ -99,7 +99,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""id"": ""edcb106e-3108-4e69-a9ff-f6c0f7d37a95"",
                     ""path"": ""<Touchscreen>/delta/x"",
                     ""interactions"": """",
-                    ""processors"": ""Scale(factor=0.25)"",
+                    ""processors"": ""Scale(factor=0.125)"",
                     ""groups"": ""Keyboard and Touch"",
                     ""action"": ""Move"",
                     ""isComposite"": false,
