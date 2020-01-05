@@ -25,6 +25,8 @@ namespace PongGame
         private NetPeer server;
         private NetPeer thisPeer;
 
+        private bool isOnHost;
+
         private readonly NetPacketProcessor netPacketProcessor = new NetPacketProcessor();
         private readonly PaddlePositionPacket paddlePositionPacket = new PaddlePositionPacket();
 
@@ -43,6 +45,7 @@ namespace PongGame
             netPacketProcessor.SubscribeReusable<SpawnBallPacket>(OnBallSpawn);
             netPacketProcessor.SubscribeReusable<BallPositionPacket>(OnBallPositionUpdate);
             netPacketProcessor.SubscribeReusable<PaddlePositionPacket>(OnRemotePaddlePositionUpdate);
+            netPacketProcessor.SubscribeReusable<StarGamePacket>(OnGameStart);
             netPacketProcessor.SubscribeReusable<RestartGamePacket>(OnGameRestart);
             netPacketProcessor.SubscribeReusable<PasueGamePacket>(OnGamePaused);
             netPacketProcessor.SubscribeReusable<GameScorePacket>(OnGameScore);
@@ -51,6 +54,12 @@ namespace PongGame
             netManager = new NetManager(this);
             netManager.Start();
             thisPeer = netManager.Connect(atoms.NetworkAddressVariable.Value, gameSettings.port, GameServer.NET_KEY);
+        }
+
+        private void OnGameStart(StarGamePacket packet)
+        {
+            if (OnGameRestartEvent != null)
+                OnGameRestartEvent();
         }
 
         private void OnGameRestart(RestartGamePacket packet)
@@ -71,11 +80,13 @@ namespace PongGame
             {
                 Debug.Log($"[CLIENT] New Player joined");
                 remotePaddle = SpawnPaddleAt(sceneReferences.SpawnPoint2, false);
+                lastRemotePaddlePosition = remotePaddle.position;
             }
             else
             {
                 Debug.Log($"[CLIENT] Old Player joined");
                 remotePaddle = SpawnPaddleAt(sceneReferences.SpawnPoint1, false);
+                lastRemotePaddlePosition = remotePaddle.position;
             }
         }
 
@@ -88,7 +99,8 @@ namespace PongGame
         {
             Debug.Log("[CLIENT] Join accept. Received player id: " + packet.id);
             var spawnPoint = sceneReferences.SpawnPoint1;
-            if (packet.id > 0)
+            isOnHost = packet.id == 0; // first player is on host
+            if (!isOnHost)
                 spawnPoint = sceneReferences.SpawnPoint2;
             localPaddle = SpawnPaddleAt(spawnPoint, true);
             if (OnClientConnectedEvent != null)
@@ -141,7 +153,7 @@ namespace PongGame
         {
             netManager.PollEvents();
 
-            if (ballTransform)
+            if (!isOnHost && ballTransform)
             {
                 ballTransform.position = Vector2.Lerp(ballTransform.position, lastBallPosition, Time.deltaTime * 50);
             }
@@ -171,6 +183,8 @@ namespace PongGame
 
         public void SendPacket<T>(T packet, DeliveryMethod deliveryMethod) where T : class, new()
         {
+            if (server == null)
+                return;
             cachedDataWriter.Reset();
             netPacketProcessor.Write(cachedDataWriter, packet);
             server.Send(cachedDataWriter, deliveryMethod);

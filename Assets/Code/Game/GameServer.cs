@@ -79,13 +79,16 @@ namespace PongGame
                 peer.Send(WritePacket(pj), DeliveryMethod.ReliableOrdered);
             }
 
-            // Send spawned ball
-            var spawnBallPacket = new SpawnBallPacket
+            if (peer != hoster)
             {
+                // Send spawned ball
+                var spawnBallPacket = new SpawnBallPacket
+                {
                 position = ball.transform.position,
                 scale = ball.transform.localScale.x
-            };
-            peer.Send(WritePacket(spawnBallPacket), DeliveryMethod.ReliableOrdered);
+                };
+                peer.Send(WritePacket(spawnBallPacket), DeliveryMethod.ReliableOrdered);
+            }
 
             if (OnPlayerConnected != null)
                 OnPlayerConnected(server.PeersCount);
@@ -104,6 +107,11 @@ namespace PongGame
         public void PushBall()
         {
             ball.Push();
+        }
+
+        public void StartGame()
+        {
+            server.SendToAll(WritePacket(new StarGamePacket()), DeliveryMethod.ReliableOrdered, hoster);
         }
 
         public void RestartGame()

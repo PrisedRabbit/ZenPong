@@ -29,7 +29,7 @@ namespace PongGame
             //bind pools
             Container.BindMemoryPool<Ball, Ball.Pool>()
                 .WithInitialSize(1)
-                .FromComponentInNewPrefab(sceneReferences.BallPrefab);
+                .FromComponentInNewPrefab(sceneReferences.BallPrefab).AsSingle();
 
             // #if UNITY_EDITOR
             //             gameSettings.gameMode = GameMode.NetworkGame;

@@ -26,6 +26,7 @@ public class StartOptions : MonoBehaviour {
 
     void Awake()
 	{
+		Time.timeScale = 1.0f;
 		//Get a reference to ShowPanels attached to UI object
 		showPanels = GetComponent<ShowPanels> ();
 

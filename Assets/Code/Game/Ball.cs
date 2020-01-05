@@ -6,6 +6,7 @@ using Zenject;
 
 namespace PongGame
 {
+    // [ContextMenu("Push", nameof(Push))]
     public sealed class Ball : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D rb;
@@ -14,6 +15,7 @@ namespace PongGame
         public Vector2 direction;
         public float force;
 
+        [ContextMenu("Push")]
         public void Push()
         {
             rb.AddForce(direction.normalized * force);
@@ -28,8 +30,8 @@ namespace PongGame
                 ball.rb.velocity = Vector2.zero;
                 ball.direction = direction;
                 ball.force = force;
-                ball.transform.position = Vector2.zero;
                 ball.transform.localScale = new Vector3(scale, scale, 1f);
+                ball.transform.position = Vector2.zero;
                 ball.srenderere.color = database.GetBallColor();
             }
         }

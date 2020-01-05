@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace PongGame
 {
-    public class NetworkGameManager : IInitializable
+    public class NetworkGameManager : IInitializable, IDisposable
     {
         [Inject] private GameSettings gameSettings;
         [Inject] private InputHandler inputHandler;
@@ -29,6 +29,7 @@ namespace PongGame
                 atoms.NetworkGameStatusVariable.Value = "Waiting for Player 2 \n Host address: " + GameServer.GetLocalIPAddress();
                 atoms.CollisionBallEvent.OnEvent += OnBallCollision;
                 atoms.CountDownEndEvent.OnEvent += OnServerCountDownEnd;
+                atoms.PauseGameEvent.OnEvent += OnServerGamePaused;
                 server.OnPlayerConnected += OnServerPlayerConnected;
                 server.OnClientPausedEvent += OnSomeoneGamePaused;
                 server.OnPeersDisconected += OnServerPlayersDisconected;
@@ -56,7 +57,7 @@ namespace PongGame
             {
                 atoms.NetworkGameStatusVariable.Value = ON_ALL_PLAYERS_READY_MSG;
                 var _ = 0;
-                DOTween.To(() => _, t => _ = t, 0, 3).OnComplete(OnServerRestartGame);
+                DOTween.To(() => _, t => _ = t, 0, 3).OnComplete(OnServerStartGame);
             }
         }
 
@@ -64,7 +65,7 @@ namespace PongGame
         {
             atoms.NetworkGameStatusVariable.Value = PLAYERS_DISCONNECTED_MSG;
             var delay = 0;
-            DOTween.To(() => delay, t => delay = t, 0, 3).OnComplete(atoms.QuitToMainMenuAction.Do);
+            DOTween.To(() => delay, t => delay = t, 0, 2).SetUpdate(true).OnComplete(atoms.QuitToMainMenuAction.Do);
         }
 
         private void OnServerCountDownEnd(UnityAtoms.Void _)
@@ -72,10 +73,16 @@ namespace PongGame
             server.PushBall();
         }
 
+        private void OnServerStartGame()
+        {
+            atoms.NetworkGameStatusVariable.Value = string.Empty;
+            server.StartGame();
+            atoms.RestartLevelEvent.Raise();
+        }
+
         private void OnServerRestartGame()
         {
             atoms.NetworkGameStatusVariable.Value = string.Empty;
-            Time.timeScale = 1f;
             server.RestartGame();
             atoms.RestartLevelEvent.Raise();
         }
@@ -123,7 +130,7 @@ namespace PongGame
         {
             atoms.NetworkGameStatusVariable.Value = HOST_DISCONNECTED_MSG;
             var _ = 0;
-            DOTween.To(() => _, t => _ = t, 0, 3).OnComplete(atoms.QuitToMainMenuAction.Do);
+            DOTween.To(() => _, t => _ = t, 0, 2).SetUpdate(true).OnComplete(atoms.QuitToMainMenuAction.Do);
         }
 
         private void OnClientGameRestart()
@@ -156,5 +163,13 @@ namespace PongGame
         }
 
         #endregion // Shared
+
+        public void Dispose()
+        {
+            atoms.CollisionBallEvent.OnEvent -= OnBallCollision;
+            atoms.CountDownEndEvent.OnEvent -= OnServerCountDownEnd;
+            atoms.PauseGameEvent.OnEvent -= OnServerGamePaused;
+            atoms.PauseGameEvent.OnEvent -= OnClientGamePaused;
+        }
     }
 }

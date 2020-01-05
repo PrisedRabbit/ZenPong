@@ -20,6 +20,7 @@ public class MultiplayerMenuController : MonoBehaviour
     {
         connectButton.interactable = false;
         addressFiled.onValueChanged.AddListener(OnChangeAdress);
+        addressFiled.text = hostAddress.Value;
     }
 
     public void StartHostGame()

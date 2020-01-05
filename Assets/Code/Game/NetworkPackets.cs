@@ -19,6 +19,7 @@ namespace PongGame
         public float scale { get; set; }
     }
 
+    public class StarGamePacket { }
     public class RestartGamePacket { }
 
     public class PasueGamePacket
