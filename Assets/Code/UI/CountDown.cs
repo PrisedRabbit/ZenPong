@@ -7,12 +7,16 @@ using DG.Tweening;
 
 public sealed class CountDown : MonoBehaviour
 {
+    #pragma warning disable 0649
+
     [SerializeField] private string[] countText;
 
     [SerializeField] private TextMeshProUGUI textComponent;
     [SerializeField] private VoidEvent countDownEndEvent;
     [SerializeField] private VoidEvent restartLevelEvent;
     [SerializeField] private RectTransform rtransform;
+
+    #pragma warning restore 0649
 
     Vector2 initSize, targetSize;
 

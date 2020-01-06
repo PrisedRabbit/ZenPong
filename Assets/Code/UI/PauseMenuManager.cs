@@ -8,6 +8,8 @@ namespace PongGame
 {
     public sealed class PauseMenuManager : MonoBehaviour
     {
+        #pragma warning disable 0649
+        
         [SerializeField] private ChangeScene quitToMainMenuAction;
         [SerializeField] private BoolEvent pauseGameEvent;
         [SerializeField] private CanvasGroup pauseGroup;

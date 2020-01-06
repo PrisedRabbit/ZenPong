@@ -13,8 +13,12 @@ namespace PongGame
 {
     public sealed class GameServer : IInitializable, ITickable, IDisposable, INetEventListener
     {
+        #pragma warning disable 0649
+
         [Inject] private GameSettings gameSettings;
         [Inject] private Ball.Pool ballPool;
+
+        #pragma warning restore 0649
 
         public event Action OnPeersDisconected;
         public event Action<int> OnPlayerConnected;

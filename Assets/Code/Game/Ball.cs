@@ -9,8 +9,12 @@ namespace PongGame
     // [ContextMenu("Push", nameof(Push))]
     public sealed class Ball : MonoBehaviour
     {
+        #pragma warning disable 0649
+        
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private SpriteRenderer srenderere;
+
+        #pragma warning restore 0649
 
         public Vector2 direction;
         public float force;
@@ -23,6 +27,8 @@ namespace PongGame
 
         public class Pool : MonoMemoryPool<Vector2, float, float, Ball>
         {
+            #pragma warning disable 0649
+            
             [Inject] IDatabase database;
 
             protected override void Reinitialize(Vector2 direction, float force, float scale, Ball ball)

@@ -9,8 +9,7 @@ namespace PongGame
     {
         public float speed;
 
-        [SerializeField]
-        private Rigidbody2D rb;
+        [SerializeField] private Rigidbody2D rb = default;
 
         public void MoveHorizontal(float step)
         {

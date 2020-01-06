@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalGameSceneReferences : MonoBehaviour
+public sealed class LocalGameSceneReferences : MonoBehaviour
 {
+    #pragma warning disable 0649
+
     [SerializeField] private Transform spawnPoint1, spawnPoint2;
     [SerializeField] private GameObject paddlePrefab;
     [SerializeField] private GameObject ballPrefab;

@@ -7,7 +7,7 @@ using Zenject;
 
 public class BallColorSelector : MonoBehaviour
 {
-    [Inject] private IDatabase database;
+    [Inject] private IDatabase database = default;
 
     public Image ballImage;
 

@@ -8,6 +8,8 @@ namespace PongGame
 {
     public class NetworkGameManager : IInitializable, IDisposable
     {
+        #pragma warning disable 0649
+
         [Inject] private GameSettings gameSettings;
         [Inject] private InputHandler inputHandler;
         [Inject] private SceneReferences sceneReferences;
@@ -16,6 +18,8 @@ namespace PongGame
 
         [InjectOptional] private GameServer server;
         [Inject] private GameClient client;
+
+        #pragma warning restore 0649
 
         private const string ON_ALL_PLAYERS_READY_MSG = "Let's get rolling the ball!";
         private const string GAME_PAUSED_MSG = "GAME IS PAUSED";

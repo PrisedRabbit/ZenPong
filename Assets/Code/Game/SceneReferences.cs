@@ -4,6 +4,8 @@ using UnityEngine;
 
 public sealed class SceneReferences : MonoBehaviour
 {
+    #pragma warning disable 0649
+
     [SerializeField] private Transform spawnPoint1, spawnPoint2;
     [SerializeField] private GameObject paddlePrefab;
     [SerializeField] private GameObject ballPrefab;

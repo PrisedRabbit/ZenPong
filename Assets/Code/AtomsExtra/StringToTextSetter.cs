@@ -8,6 +8,9 @@ using Zenject;
 public sealed class StringToTextSetter : MonoBehaviour, IInitializable
 {
     [Tooltip("Deactivate this GameObject when text is empty")] public bool hideEmpty;
+
+    #pragma warning disable 0649
+
     [SerializeField][Tooltip("Optional")] private TextMeshProUGUI textMeshPro;
     [SerializeField][Tooltip("Optional")] private Text uGuiText;
     [SerializeField] private StringVariable stringVariable;

@@ -7,6 +7,8 @@ using UnityEngine;
 // just inject this and use 
 public sealed class AtomsReferences : MonoBehaviour
 {
+    #pragma warning disable 0649
+    
     [SerializeField] private VoidEvent countDownEndEvent;
     [SerializeField] private VoidEvent restartLevelEvent;
     [SerializeField] private BoolEvent pauseGameEvent;

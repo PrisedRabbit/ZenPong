@@ -7,6 +7,8 @@ namespace PongGame
 {
     public class DisableObjectInGameMode : MonoBehaviour
     {
+        #pragma warning disable 0649
+        
         [SerializeField] private GameMode disableForMode;
 
         [Inject]

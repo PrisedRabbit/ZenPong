@@ -8,6 +8,8 @@ using UnityEngine.UI;
 [EditorIcon("atom-icon-delicate")]
 public sealed class IntToTextSetter : MonoBehaviour
 {
+    #pragma warning disable 0649
+    
     [SerializeField][Tooltip("Optional")] private TextMeshProUGUI textMeshPro;
     [SerializeField][Tooltip("Optional")] private Text uGuiText;
     [SerializeField] private IntVariable intVariable;

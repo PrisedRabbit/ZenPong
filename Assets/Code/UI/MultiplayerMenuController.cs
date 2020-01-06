@@ -10,11 +10,15 @@ using Zenject;
 
 public class MultiplayerMenuController : MonoBehaviour
 {
+    #pragma warning disable 0649
+
     [SerializeField] Button connectButton;
     [SerializeField] StringVariable hostAddress;
     [SerializeField] InputField addressFiled;
 
     [Inject] GameSettings gameSettings;
+
+    #pragma warning restore 0649
 
     private void Start()
     {

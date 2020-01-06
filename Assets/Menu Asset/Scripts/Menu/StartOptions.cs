@@ -22,7 +22,7 @@ public class StartOptions : MonoBehaviour {
 	private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
     private CanvasGroup menuCanvasGroup;
 
-	[Inject] private GameSettings gameSettings;
+	[Inject] private GameSettings gameSettings = default;
 
     void Awake()
 	{

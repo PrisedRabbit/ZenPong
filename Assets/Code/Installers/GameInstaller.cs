@@ -8,7 +8,11 @@ namespace PongGame
     [RequireComponent(typeof(SceneReferences))]
     public sealed class GameInstaller : MonoInstaller
     {
+        #pragma warning disable 0649
+
         [Inject] private GameSettings gameSettings;
+        
+        #pragma warning restore 0649
 
         private InputHandler inputHandler;
 
